@@ -5,7 +5,7 @@ from schemas.user_schemas import UserCreate
 from schemas.token import Token
 from models.user import User
 from database import get_session
-from auth import get_password_hash, authenticate_user, create_access_token, ADMIN_REGISTER_SECRET
+from auth.dependencies import get_password_hash, authenticate_user, create_access_token, ADMIN_REGISTER_SECRET
 from datetime import timedelta
 
 

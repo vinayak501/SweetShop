@@ -1,11 +1,17 @@
-from pydantic import BaseModel, EmailStr
-from typing import Optional, List
+from pydantic import BaseModel
+from typing import Optional
 
-class SweetCreate(BaseModel):
+
+
+class SweetBase(BaseModel):
     name: str
     category: str
     price: float
-    quantity: int = 0
+    quantity: int
+
+
+class SweetCreate(SweetBase):
+    pass
 
 
 class SweetUpdate(BaseModel):
@@ -14,8 +20,16 @@ class SweetUpdate(BaseModel):
     price: Optional[float] = None
     quantity: Optional[int] = None
 
+
+class SweetOut(SweetBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+
 class PurchaseRequest(BaseModel):
-    quantity: int = 1
+    quantity: int
 
 
 class RestockRequest(BaseModel):
