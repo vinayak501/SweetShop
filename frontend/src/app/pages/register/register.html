@@ -1,32 +1,181 @@
-<div class="flex items-center justify-center min-h-screen bg-gray-100">
-  <div class="bg-white shadow-lg rounded-lg p-8 w-96">
-    <h2 class="text-2xl font-bold mb-6 text-center">Register</h2>
-    <form (ngSubmit)="onRegister()">
-      <div class="mb-4">
-        <label class="block text-gray-700">Username</label>
-        <input [(ngModel)]="username" name="username" type="text"
-          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-300"
-          required />
-      </div>
-      <div class="mb-4">
-        <label class="block text-gray-700">Email</label>
-        <input [(ngModel)]="email" name="email" type="email"
-          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-300"
-          required />
-      </div>
-      <div class="mb-4">
-        <label class="block text-gray-700">Password</label>
-        <input [(ngModel)]="password" name="password" type="password"
-          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-300"
-          required />
-      </div>
-      <button type="submit"
-        class="w-full bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600">
-        Register
-      </button>
-    </form>
-    <p class="mt-4 text-center text-gray-600">
-      Already have an account? <a routerLink="/login" class="text-indigo-500">Login</a>
-    </p>
-  </div>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweet Delights - Register</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .candy-bg {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 50%, #e84393 100%);
+        }
+        .sweet-card {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .floating-candy {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+        .candy-shadow {
+            box-shadow: 0 20px 40px rgba(232, 67, 147, 0.2);
+        }
+        .input-sweet:focus {
+            box-shadow: 0 0 0 3px rgba(232, 67, 147, 0.2);
+            border-color: #e84393;
+        }
+        .btn-candy {
+            background: linear-gradient(135deg, #e84393, #fd79a8);
+            transition: all 0.3s ease;
+        }
+        .btn-candy:hover {
+            background: linear-gradient(135deg, #d63384, #f85fa0);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(232, 67, 147, 0.4);
+        }
+        .progress-bar {
+            height: 4px;
+            background: linear-gradient(to right, #e84393, #fd79a8);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body class="candy-bg min-h-screen">
+    <!-- Floating candy decorations -->
+    <div class="fixed top-16 left-8 text-4xl floating-candy">🍰</div>
+    <div class="fixed top-20 right-12 text-3xl floating-candy" style="animation-delay: 1s;">🧁</div>
+    <div class="fixed bottom-16 left-16 text-3xl floating-candy" style="animation-delay: 2s;">🍪</div>
+    <div class="fixed bottom-24 right-8 text-4xl floating-candy" style="animation-delay: 0.5s;">🎂</div>
+    <div class="fixed top-1/3 left-4 text-2xl floating-candy" style="animation-delay: 1.5s;">🍩</div>
+    <div class="fixed top-1/2 right-4 text-2xl floating-candy" style="animation-delay: 2.5s;">🍭</div>
+    <div class="fixed bottom-1/3 left-8 text-3xl floating-candy" style="animation-delay: 3s;">🍬</div>
+
+    <div class="flex items-center justify-center min-h-screen px-4 py-8">
+        <div class="sweet-card candy-shadow rounded-3xl p-8 w-full max-w-md">
+            <!-- Logo/Header -->
+            <div class="text-center mb-8">
+                <div class="text-5xl mb-2">🎂</div>
+                <h1 class="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
+                    Sweet Delights
+                </h1>
+                <p class="text-gray-600 text-sm">Join our sweet community!</p>
+            </div>
+
+            <!-- Register Form -->
+            <form id="registerForm">
+                <div class="mb-5">
+                    <label class="block text-gray-700 font-medium mb-2 flex items-center">
+                        <span class="mr-2">👤</span>
+                        Username
+                    </label>
+                    <input 
+                        type="text" 
+                        name="username"
+                        class="w-full px-4 py-3 border-2 border-pink-200 rounded-2xl focus:outline-none input-sweet transition-all duration-300 bg-white/70"
+                        placeholder="Choose a sweet username"
+                        required 
+                        oninput="updateProgress()"
+                    />
+                </div>
+
+                <div class="mb-5">
+                    <label class="block text-gray-700 font-medium mb-2 flex items-center">
+                        <span class="mr-2">📧</span>
+                        Email Address
+                    </label>
+                    <input 
+                        type="email" 
+                        name="email"
+                        class="w-full px-4 py-3 border-2 border-pink-200 rounded-2xl focus:outline-none input-sweet transition-all duration-300 bg-white/70"
+                        placeholder="your@email.com"
+                        required 
+                        oninput="updateProgress()"
+                    />
+                </div>
+
+                <div class="mb-5">
+                    <label class="block text-gray-700 font-medium mb-2 flex items-center">
+                        <span class="mr-2">🔒</span>
+                        Password
+                    </label>
+                    <input 
+                        type="password" 
+                        name="password"
+                        class="w-full px-4 py-3 border-2 border-pink-200 rounded-2xl focus:outline-none input-sweet transition-all duration-300 bg-white/70"
+                        placeholder="Create a strong password"
+                        required 
+                        oninput="updateProgress()"
+                    />
+                </div>
+                <!-- Register Button -->
+                <button 
+                    type="submit" 
+                    class="w-full btn-candy text-white font-semibold py-3 px-6 rounded-2xl text-lg shadow-lg"
+                >
+                    🌟 Create Sweet Account
+                </button>
+            </form>
+
+            <!-- Login Link -->
+            <div class="mt-6 text-center">
+                <p class="text-gray-600">
+                    Already part of our sweet family? 
+                    <a routerLink="/login" class="text-pink-500 hover:text-pink-600 font-semibold transition-colors">
+                        Sign in here! 🍭
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateProgress() {
+            const form = document.getElementById('registerForm');
+            const inputs = form.querySelectorAll('input[required]');
+            const progressBar = document.getElementById('progressBar');
+            let filledInputs = 0;
+
+            inputs.forEach(input => {
+                if (input.type === 'checkbox' && input.checked) {
+                    filledInputs++;
+                } else if (input.type !== 'checkbox' && input.value.trim() !== '') {
+                    filledInputs++;
+                }
+            });
+
+            const progress = (filledInputs / inputs.length) * 100;
+            progressBar.style.width = progress + '%';
+        }
+
+        // Password strength indicator
+        const passwordInput = document.querySelector('input[name="password"]');
+        const strengthIndicator = document.getElementById('passwordStrength');
+
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            let strength = 'Weak';
+            let color = 'text-red-500';
+
+            if (password.length >= 8 && /[A-Z]/.test(password) && /[0-9]/.test(password)) {
+                strength = 'Strong';
+                color = 'text-green-500';
+            } else if (password.length >= 6) {
+                strength = 'Medium';
+                color = 'text-yellow-500';
+            }
+
+            strengthIndicator.textContent = strength;
+            strengthIndicator.className = `ml-1 font-medium ${color}`;
+        });
+    </script>
+</body>
+</html>
