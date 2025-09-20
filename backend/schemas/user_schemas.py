@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr
-from typing import Optional, List
+from typing import Optional
 
 class UserCreate(BaseModel):
     username: str
@@ -8,5 +8,10 @@ class UserCreate(BaseModel):
     admin_code: Optional[str] = None
 
 class UserLogin(BaseModel):
-    email:str
-    password:str
+    email: EmailStr
+    password: str
+
+class UserAdminLogin(BaseModel):
+    email: EmailStr
+    password: str
+    login_as_admin: bool = True  # This field indicates admin login attempt

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlmodel import Session, select
-from schemas.user_schemas import UserCreate,UserLogin
+from schemas.user_schemas import UserCreate,UserLogin,UserAdminLogin
 from schemas.token import Token
 from models.user import User
 from database import get_session
@@ -46,3 +46,23 @@ def login(user_in: UserLogin, session: Session = Depends(get_session)):
     token = create_access_token({"sub": user.username}, access_token_expires)
     return {"access_token": token, "token_type": "bearer"}
 
+@router.post("/admin-login", response_model=Token)
+def admin_login(user_in: UserAdminLogin, session: Session = Depends(get_session)):
+    user = authenticate_user(session, user_in.email, user_in.password)
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect email or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
+    # Check if user is admin
+    if not user.is_admin:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Access denied. Admin privileges required.",
+        )
+    
+    access_token_expires = timedelta(minutes=60)
+    token = create_access_token({"sub": user.username}, access_token_expires)
+    return {"access_token": token, "token_type": "bearer", "is_admin": user.is_admin, "username": user.username}
