@@ -6,3 +6,7 @@ class UserCreate(BaseModel):
     email: EmailStr
     password: str
     admin_code: Optional[str] = None
+
+class UserLogin(BaseModel):
+    email:str
+    password:str

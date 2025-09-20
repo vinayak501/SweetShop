@@ -36,12 +36,12 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
 
-def get_user_by_username(session: Session, username: str):
-    return session.exec(select(User).where(User.username == username)).first()
+def get_user_by_email(session: Session, email: str):
+    return session.exec(select(User).where(User.email == email)).first()
 
 
-def authenticate_user(session: Session, username: str, password: str):
-    user = get_user_by_username(session, username)
+def authenticate_user(session: Session, email: str, password: str):
+    user = get_user_by_email(session, email)
     if not user or not verify_password(password, user.hashed_password):
         return None
     return user

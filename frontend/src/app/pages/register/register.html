@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,48 +8,70 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
         body {
             font-family: 'Poppins', sans-serif;
         }
+
         .candy-bg {
             background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 50%, #e84393 100%);
         }
+
         .sweet-card {
             backdrop-filter: blur(10px);
             background: rgba(255, 255, 255, 0.95);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
+
         .floating-candy {
             animation: float 3s ease-in-out infinite;
         }
+
         @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(5deg); }
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-10px) rotate(5deg);
+            }
         }
+
         .candy-shadow {
             box-shadow: 0 20px 40px rgba(232, 67, 147, 0.2);
         }
+
         .input-sweet:focus {
             box-shadow: 0 0 0 3px rgba(232, 67, 147, 0.2);
             border-color: #e84393;
         }
+
         .btn-candy {
             background: linear-gradient(135deg, #e84393, #fd79a8);
             transition: all 0.3s ease;
         }
-        .btn-candy:hover {
+
+        .btn-candy:hover:not(:disabled) {
             background: linear-gradient(135deg, #d63384, #f85fa0);
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(232, 67, 147, 0.4);
         }
-        .progress-bar {
-            height: 4px;
-            background: linear-gradient(to right, #e84393, #fd79a8);
-            border-radius: 2px;
-            transition: width 0.3s ease;
+
+        .btn-candy:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .spinner {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
+
 <body class="candy-bg min-h-screen">
     <!-- Floating candy decorations -->
     <div class="fixed top-16 left-8 text-4xl floating-candy">🍰</div>
@@ -70,8 +93,13 @@
                 <p class="text-gray-600 text-sm">Join our sweet community!</p>
             </div>
 
+            <!-- Error Message -->
+            <div *ngIf="errorMessage" class="mb-6 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+                {{ errorMessage }}
+            </div>
+
             <!-- Register Form -->
-            <form id="registerForm">
+            <form (ngSubmit)="onRegister()" #registerForm="ngForm">
                 <div class="mb-5">
                     <label class="block text-gray-700 font-medium mb-2 flex items-center">
                         <span class="mr-2">👤</span>
@@ -79,11 +107,12 @@
                     </label>
                     <input 
                         type="text" 
+                        [(ngModel)]="username" 
                         name="username"
+                        (input)="onInputChange()"
+                        required
                         class="w-full px-4 py-3 border-2 border-pink-200 rounded-2xl focus:outline-none input-sweet transition-all duration-300 bg-white/70"
-                        placeholder="Choose a sweet username"
-                        required 
-                        oninput="updateProgress()"
+                        placeholder="Choose a sweet username" 
                     />
                 </div>
 
@@ -94,41 +123,48 @@
                     </label>
                     <input 
                         type="email" 
+                        [(ngModel)]="email" 
                         name="email"
+                        (input)="onInputChange()"
+                        required
                         class="w-full px-4 py-3 border-2 border-pink-200 rounded-2xl focus:outline-none input-sweet transition-all duration-300 bg-white/70"
-                        placeholder="your@email.com"
-                        required 
-                        oninput="updateProgress()"
+                        placeholder="your@email.com" 
                     />
                 </div>
 
-                <div class="mb-5">
+                <div class="mb-6">
                     <label class="block text-gray-700 font-medium mb-2 flex items-center">
                         <span class="mr-2">🔒</span>
                         Password
                     </label>
                     <input 
                         type="password" 
+                        [(ngModel)]="password" 
                         name="password"
+                        (input)="onInputChange()"
+                        required
+                        minlength="6"
                         class="w-full px-4 py-3 border-2 border-pink-200 rounded-2xl focus:outline-none input-sweet transition-all duration-300 bg-white/70"
-                        placeholder="Create a strong password"
-                        required 
-                        oninput="updateProgress()"
+                        placeholder="Create a strong password" 
                     />
                 </div>
-                <!-- Register Button -->
+
+                <!-- Submit Button -->
                 <button 
-                    type="submit" 
-                    class="w-full btn-candy text-white font-semibold py-3 px-6 rounded-2xl text-lg shadow-lg"
-                >
-                    🌟 Create Sweet Account
+                    type="submit"
+                    [disabled]="isLoading || !registerForm.form.valid"
+                    class="w-full btn-candy text-white font-semibold py-3 px-6 rounded-2xl text-lg shadow-lg flex items-center justify-center">
+                    <div *ngIf="isLoading" class="mr-2">
+                        <div class="w-5 h-5 border-2 border-white border-t-transparent rounded-full spinner"></div>
+                    </div>
+                    <span>{{ isLoading ? 'Creating Account...' : '🌟 Create Sweet Account' }}</span>
                 </button>
             </form>
 
             <!-- Login Link -->
             <div class="mt-6 text-center">
                 <p class="text-gray-600">
-                    Already part of our sweet family? 
+                    Already part of our sweet family?
                     <a routerLink="/login" class="text-pink-500 hover:text-pink-600 font-semibold transition-colors">
                         Sign in here! 🍭
                     </a>
@@ -136,46 +172,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-        function updateProgress() {
-            const form = document.getElementById('registerForm');
-            const inputs = form.querySelectorAll('input[required]');
-            const progressBar = document.getElementById('progressBar');
-            let filledInputs = 0;
-
-            inputs.forEach(input => {
-                if (input.type === 'checkbox' && input.checked) {
-                    filledInputs++;
-                } else if (input.type !== 'checkbox' && input.value.trim() !== '') {
-                    filledInputs++;
-                }
-            });
-
-            const progress = (filledInputs / inputs.length) * 100;
-            progressBar.style.width = progress + '%';
-        }
-
-        // Password strength indicator
-        const passwordInput = document.querySelector('input[name="password"]');
-        const strengthIndicator = document.getElementById('passwordStrength');
-
-        passwordInput.addEventListener('input', function() {
-            const password = this.value;
-            let strength = 'Weak';
-            let color = 'text-red-500';
-
-            if (password.length >= 8 && /[A-Z]/.test(password) && /[0-9]/.test(password)) {
-                strength = 'Strong';
-                color = 'text-green-500';
-            } else if (password.length >= 6) {
-                strength = 'Medium';
-                color = 'text-yellow-500';
-            }
-
-            strengthIndicator.textContent = strength;
-            strengthIndicator.className = `ml-1 font-medium ${color}`;
-        });
-    </script>
 </body>
+
 </html>

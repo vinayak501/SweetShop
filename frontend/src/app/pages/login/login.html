@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,35 +8,51 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
         body {
             font-family: 'Poppins', sans-serif;
         }
+
         .candy-bg {
             background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
         }
+
         .sweet-card {
             backdrop-filter: blur(10px);
             background: rgba(255, 255, 255, 0.95);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
+
         .floating-candy {
             animation: float 3s ease-in-out infinite;
         }
+
         @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
         }
+
         .candy-shadow {
             box-shadow: 0 20px 40px rgba(255, 182, 193, 0.3);
         }
+
         .input-sweet:focus {
             box-shadow: 0 0 0 3px rgba(255, 182, 193, 0.3);
             border-color: #ff69b4;
         }
+
         .btn-candy {
             background: linear-gradient(135deg, #ff6b9d, #ff8fab);
             transition: all 0.3s ease;
         }
+
         .btn-candy:hover {
             background: linear-gradient(135deg, #ff5a8a, #ff7ea0);
             transform: translateY(-2px);
@@ -43,6 +60,7 @@
         }
     </style>
 </head>
+
 <body class="candy-bg min-h-screen">
     <!-- Floating candy decorations -->
     <div class="fixed top-10 left-10 text-4xl floating-candy">🍭</div>
@@ -57,7 +75,8 @@
             <!-- Logo/Header -->
             <div class="text-center mb-8">
                 <div class="text-5xl mb-2">🍭</div>
-                <h1 class="text-3xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent mb-2">
+                <h1
+                    class="text-3xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent mb-2">
                     Sweet Delights
                 </h1>
                 <p class="text-gray-600 text-sm">Welcome back to sweetness!</p>
@@ -70,13 +89,9 @@
                         <span class="mr-2">📧</span>
                         Email Address
                     </label>
-                    <input 
-                        type="email" 
-                        name="email"
+                    <input type="email" name="email" [(ngModel)]="email"
                         class="w-full px-4 py-3 border-2 border-pink-200 rounded-2xl focus:outline-none input-sweet transition-all duration-300 bg-white/70"
-                        placeholder="your@email.com"
-                        required 
-                    />
+                        placeholder="your@email.com" required />
                 </div>
 
                 <div class="mb-6">
@@ -84,13 +99,9 @@
                         <span class="mr-2">🔒</span>
                         Password
                     </label>
-                    <input 
-                        type="password" 
-                        name="password"
+                    <input type="password" name="password" [(ngModel)]="password"
                         class="w-full px-4 py-3 border-2 border-pink-200 rounded-2xl focus:outline-none input-sweet transition-all duration-300 bg-white/70"
-                        placeholder="Enter your password"
-                        required 
-                    />
+                        placeholder="Enter your password" required />
                 </div>
 
                 <!-- Remember Me & Forgot Password -->
@@ -105,10 +116,8 @@
                 </div>
 
                 <!-- Login Button -->
-                <button 
-                    type="submit" 
-                    class="w-full btn-candy text-white font-semibold py-3 px-6 rounded-2xl text-lg shadow-lg"
-                >
+                <button (click)="onLogin()" type="submit"
+                    class="w-full btn-candy text-white font-semibold py-3 px-6 rounded-2xl text-lg shadow-lg">
                     🍰 Login to Sweet Paradise
                 </button>
             </form>
@@ -116,7 +125,7 @@
             <!-- Register Link -->
             <div class="mt-6 text-center">
                 <p class="text-gray-600">
-                    New to our sweet family? 
+                    New to our sweet family?
                     <a routerLink="/register" class="text-pink-500 hover:text-pink-600 font-semibold transition-colors">
                         Join us today! 🎉
                     </a>
@@ -125,4 +134,5 @@
         </div>
     </div>
 </body>
+
 </html>
