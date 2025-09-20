@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +13,7 @@ export class Login {
   email = '';
   password = '';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
 
   onLogin() {
@@ -23,6 +23,7 @@ export class Login {
     }).subscribe({
       next: (res: any) => {
         localStorage.setItem('token', res.access_token);
+        this.router.navigate(['dashboard'])
         alert('Login successful!');
       },
       error: (err) => alert('Login failed: ' + err.error.detail)

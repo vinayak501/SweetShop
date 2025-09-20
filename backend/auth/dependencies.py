@@ -39,6 +39,9 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
 def get_user_by_email(session: Session, email: str):
     return session.exec(select(User).where(User.email == email)).first()
 
+def get_user_by_username(session: Session, username: str):
+    return session.exec(select(User).where(User.username == username)).first()
+
 
 def authenticate_user(session: Session, email: str, password: str):
     user = get_user_by_email(session, email)

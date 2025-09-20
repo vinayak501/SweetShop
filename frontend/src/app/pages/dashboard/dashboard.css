@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.candy-bg {
+    background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 50%, #e84393 100%);
+}
+
+.sweet-card {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sweet-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 25px 50px rgba(232, 67, 147, 0.3);
+}
+
+.candy-shadow {
+    box-shadow: 0 20px 40px rgba(232, 67, 147, 0.2);
+}
+
+.btn-candy {
+    background: linear-gradient(135deg, #e84393, #fd79a8);
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-candy:hover:not(:disabled) {
+    background: linear-gradient(135deg, #d63384, #f85fa0);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(232, 67, 147, 0.4);
+}
+
+.btn-candy:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: linear-gradient(135deg, #bbb, #ddd);
+}
+
+.btn-candy:disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* Input focus styles */
+input:focus {
+    box-shadow: 0 0 0 3px rgba(232, 67, 147, 0.2);
+    border-color: #e84393;
+}
+
+/* Loading animation */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+/* Card grid responsive adjustments */
+@media (max-width: 640px) {
+    .sweet-card {
+        padding: 1rem;
+    }
+}
