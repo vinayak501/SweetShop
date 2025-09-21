@@ -14,6 +14,10 @@ A full-stack e-commerce application for a sweet shop built with Angular (fronten
 | **Add Sweets** | ![Search](./images/Add_sweet.png) |
 | **Edit Sweet** | ![Search](./images/Edit_sweet.png) |
 | **Restock sweet** | ![Search](./images/Restock_sweet.png) |
+| **Test cases using ng test** | ![Search](./images/Test_cases(terminal).png) |
+| **Test cases in karma UI** | ![Search](./images/Test_cases(karma).png) |
+
+
 
 
 
@@ -76,12 +80,13 @@ A full-stack e-commerce application for a sweet shop built with Angular (fronten
 2. **Create virtual environment**
    ```bash
    python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   source backend/.venv/bin/activate  
+   On Windows: backend\.venv\Scripts\activate
    ```
 
 3. **Install Python dependencies**
    ```bash
-   pip install fastapi uvicorn sqlmodel bcrypt python-jose python-multipart
+   pip install -r backend\requirments.txt
    ```
 
 4. **Run the backend server**
