@@ -10,6 +10,12 @@ A full-stack e-commerce application for a sweet shop built with Angular (fronten
 | **Login (User/Admin)** | ![Login](./images/Login(user%20or%20admin).png) |
 | **Dashboard & Shopping** | ![Dashboard](./images/Dashboard.png) |
 | **Search & Filter** | ![Search](./images/Search.png) |
+| **Admin Page** | ![Search](./images/Admin_dashboard.png) |
+| **Add Sweets** | ![Search](./images/Add_sweet.png) |
+| **Edit Sweet** | ![Search](./images/Edit_sweet.png) |
+| **Restock sweet** | ![Search](./images/Restock_sweet.png) |
+
+
 
 ## 🚀 Features
 

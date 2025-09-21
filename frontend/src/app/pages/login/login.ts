@@ -41,15 +41,16 @@ export class Login {
     };
 
     // Choose endpoint based on admin login checkbox
-    const endpoint = this.loginAsAdmin 
+    const endpoint = this.loginAsAdmin
       ? 'http://localhost:8000/api/auth/admin-login'
       : 'http://localhost:8000/api/auth/login';
 
-    console.log('Attempting login:', { 
-      email: this.email, 
+    console.log('Attempting login:', {
+      email: this.email,
       loginAsAdmin: this.loginAsAdmin,
-      endpoint 
+      endpoint
     });
+
 
     this.http.post(endpoint, loginData, {
       headers: {
@@ -58,7 +59,7 @@ export class Login {
     }).subscribe({
       next: (res: any) => {
         console.log('Login successful:', res);
-        
+
         if (res.access_token) {
           // Store authentication data
           localStorage.setItem('token', res.access_token);
@@ -68,9 +69,14 @@ export class Login {
 
           // Show success message
           this.showToast('Login successful!', 'success');
+          console.log("loginAsAdmin: ", this.loginAsAdmin);
+          console.log("res.is_admin: ", res.is_admin);
+
+
 
           // Navigate based on admin status and login type
-          if (this.loginAsAdmin && res.is_admin) {
+          if (this.loginAsAdmin && res.access_token != null) {
+            localStorage.setItem("is_admin", "true")
             this.router.navigate(['/admin']);
           } else if (!this.loginAsAdmin) {
             this.router.navigate(['/dashboard']);
@@ -82,7 +88,7 @@ export class Login {
       error: (error: HttpErrorResponse) => {
         console.error('Login error:', error);
         this.isLoading = false;
-        
+
         if (error.status === 0) {
           this.errorMessage = 'Unable to connect to server. Please check if the backend is running.';
         } else if (error.status === 401) {
@@ -114,13 +120,12 @@ export class Login {
   private showToast(message: string, type: 'success' | 'error') {
     // Simple toast implementation - you can replace with a more sophisticated toast library
     const toast = document.createElement('div');
-    toast.className = `fixed top-4 right-4 px-6 py-3 rounded-lg text-white font-semibold z-50 ${
-      type === 'success' ? 'bg-green-500' : 'bg-red-500'
-    }`;
+    toast.className = `fixed top-4 right-4 px-6 py-3 rounded-lg text-white font-semibold z-50 ${type === 'success' ? 'bg-green-500' : 'bg-red-500'
+      }`;
     toast.textContent = message;
-    
+
     document.body.appendChild(toast);
-    
+
     // Auto remove after 3 seconds
     setTimeout(() => {
       if (document.body.contains(toast)) {
