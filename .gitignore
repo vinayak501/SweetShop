@@ -1,1 +1,3 @@
 /backend/.ssenv
+/backend/.ssenv/
+/backend/.env
