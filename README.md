@@ -74,7 +74,7 @@ A full-stack e-commerce application for a sweet shop built with Angular (fronten
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd sweet-delights
+   cd Sweetshop
    ```
 
 2. **Create virtual environment**
